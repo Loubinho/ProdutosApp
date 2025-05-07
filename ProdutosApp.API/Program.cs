@@ -1,3 +1,5 @@
+using Scalar.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,19 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+//Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(
+//c =>
+//{
+//    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+//    {
+//        Title = "ProdutosApp API",
+//        Version = "v1"
+//    });
+//}
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -13,6 +28,21 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+//swagger
+app.UseSwagger();
+app.UseSwaggerUI(
+//    c =>
+//{
+//    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProdutosApp API V1");
+//    c.RoutePrefix = string.Empty; // Set the Swagger UI at the app's root
+//}
+);
+
+//Scalar
+app.MapScalarApiReference(options =>
+{
+    options.WithTheme(ScalarTheme.BluePlanet);
+});
 
 app.UseAuthorization();
 
