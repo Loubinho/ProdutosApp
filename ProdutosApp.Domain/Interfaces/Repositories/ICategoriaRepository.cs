@@ -9,7 +9,7 @@ namespace ProdutosApp.Domain.Interfaces.Repositories
     /// <summary>
     /// Interface for the category repository.
     /// </summary>
-    public interface ICategoriaRepository
+    public interface ICategoriaRepository : IBaseRepository<Entities.Categoria, Guid>
     {
     }
 }

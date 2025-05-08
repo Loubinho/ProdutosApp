@@ -9,7 +9,7 @@ namespace ProdutosApp.Domain.Interfaces.Repositories
     /// <summary>
     /// Interface for the product repository.
     /// </summary>
-    public interface IProdutoRepository
+    public interface IProdutoRepository : IBaseRepository<Entities.Produto, Guid>
     {
     }
 }
