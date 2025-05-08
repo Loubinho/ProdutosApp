@@ -45,9 +45,10 @@ namespace ProdutosApp.Infra.Data.Mappings
                 .IsRequired();
 
             // Relationships
-            builder.HasOne(p => p.Categoria) // Define the relationship with Categoria 
-                .WithMany(c => c.Produtos)
-                .HasForeignKey(p => p.CategoriaId);
+            builder.HasOne(p => p.Categoria) // Produto has 1 Categoria
+                .WithMany(c => c.Produtos) // Categoria has N Produtos
+                .HasForeignKey(p => p.CategoriaId)// Foreign key in Produto
+                .OnDelete(DeleteBehavior.Restrict); // Optional: specify delete behavior has not been set Produto
         }
     }
 }
