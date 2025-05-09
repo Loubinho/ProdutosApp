@@ -20,7 +20,7 @@ namespace ProdutosApp.Infra.Data.Extensions
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static IServiceCollection AddEntityFramewor( this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddEntityFramework( this IServiceCollection services, IConfiguration configuration)
         {
             // Add Entity Framework Core with SQL Server
             services.AddDbContext<Contexts.DataContext>(options =>
