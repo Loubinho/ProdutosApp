@@ -12,7 +12,7 @@ using ProdutosApp.Infra.Data.Contexts;
 namespace ProdutosApp.Infra.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250509214305_Initial")]
+    [Migration("20250509214256_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -31,22 +31,20 @@ namespace ProdutosApp.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("Ativo")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Nome");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Nome")
-                        .IsUnique()
-                        .HasDatabaseName("IX_Categoria_Nome");
+                        .IsUnique();
 
-                    b.ToTable("Categorias", (string)null);
+                    b.ToTable("Categoria");
                 });
 
             modelBuilder.Entity("ProdutosApp.Domain.Entities.Produto", b =>
@@ -66,8 +64,8 @@ namespace ProdutosApp.Infra.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(18,2)");
@@ -79,7 +77,7 @@ namespace ProdutosApp.Infra.Data.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.ToTable("Produtos", (string)null);
+                    b.ToTable("Produto");
                 });
 
             modelBuilder.Entity("ProdutosApp.Domain.Entities.Produto", b =>
@@ -97,8 +95,6 @@ namespace ProdutosApp.Infra.Data.Migrations
                 {
                     b.Navigation("Produtos");
                 });
-
-
 #pragma warning restore 612, 618
         }
     }

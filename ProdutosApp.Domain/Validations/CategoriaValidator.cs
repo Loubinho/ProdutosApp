@@ -9,23 +9,22 @@ using System.Threading.Tasks;
 namespace ProdutosApp.Domain.Validations
 {
     /// <summary>
-    /// Validator class for the Categoria entity.
+    /// Classe de regras de validação para Categoria com FluentValidation
     /// </summary>
-    public class CategoriaValidator : FluentValidation.AbstractValidator<Categoria>
+    public class CategoriaValidator : AbstractValidator<Categoria>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CategoriaValidator"/> class.
+        /// Método construtor contendo os mapeamentos das validações
         /// </summary>
         public CategoriaValidator()
         {
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("O ID da categoria é obrigatório.")
-                .NotEqual(Guid.Empty).WithMessage("O ID da categoria não pode ser vazio.");
+                .NotNull().WithMessage("O Id da categoria não pode ser nulo.")
+                .NotEqual(Guid.Empty).WithMessage("O Id da categoria não pode ser vazio.");
+
             RuleFor(c => c.Nome)
-                .NotEmpty().WithMessage("O nome da categoria é obrigatório.")
+                .NotEmpty().WithMessage("O nome da categoria não pode ser vazio.")
                 .Length(3, 50).WithMessage("O nome da categoria deve ter entre 3 e 50 caracteres.");
-            RuleFor(c => c.Descricao)
-                .MaximumLength(200).WithMessage("A descrição da categoria deve ter no máximo 200 caracteres.");
         }
     }
 }

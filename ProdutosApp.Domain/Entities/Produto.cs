@@ -7,22 +7,26 @@ using System.Threading.Tasks;
 namespace ProdutosApp.Domain.Entities
 {
     /// <summary>
-    /// Represents a product model.
+    /// Modelo de entidade de domínio para Produto.
     /// </summary>
     public class Produto
     {
-        #region Properties
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public string Nome { get; set; } = string.Empty;
+        #region Propriedades
+
+        public Guid? Id { get; set; }
+        public string? Nome { get; set; }
         public decimal? Preco { get; set; }
         public int? Quantidade { get; set; }
-        public DateTime? DataHoraCriacao { get; set; } // DateOnly + TimeSpan
+        public DateTime? DataHoraCriacao { get; set; }
         public bool? Ativo { get; set; }
-        public Guid? CategoriaId  { get; set; }
+        public Guid? CategoriaId { get; set; }
+
         #endregion
 
-        #region Relations
+        #region Relacionamentos
+
         public Categoria? Categoria { get; set; }
+
         #endregion
     }
 }

@@ -7,19 +7,22 @@ using System.Threading.Tasks;
 namespace ProdutosApp.Domain.Entities
 {
     /// <summary>
-    /// Represents a product category model.
+    /// Modelo de entidade de domínio para Categoria.
     /// </summary>
     public class Categoria
     {
-        #region Properties
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public string Nome { get; set; } = string.Empty;
-        public string? Descricao { get; set; }
+        #region Propriedades
+
+        public Guid? Id { get; set; }
+        public string? Nome { get; set; }
+        public bool? Ativo { get; set; }
 
         #endregion
 
-        #region Relations
+        #region Relacionamentos
+
         public ICollection<Produto>? Produtos { get; set; }
+
         #endregion
     }
 }

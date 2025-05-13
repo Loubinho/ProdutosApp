@@ -10,45 +10,39 @@ using System.Threading.Tasks;
 namespace ProdutosApp.Infra.Data.Mappings
 {
     /// <summary>
-    /// Mapping class for the Produto entity.
+    /// Classe para mapeamento da entidade Produto no banco de dados
     /// </summary>
     public class ProdutoMap : IEntityTypeConfiguration<Produto>
     {
         public void Configure(EntityTypeBuilder<Produto> builder)
         {
-            // Table
-            builder.ToTable("Produtos");
+            builder.HasKey(p => p.Id); //chave primária
 
-            // Primary Key
-            builder.HasKey(p => p.Id);
-
-            // Properties
             builder.Property(p => p.Nome)
-                .IsRequired()
-                .HasMaxLength(150);
+                .HasMaxLength(50) //varchar(50)
+                .IsRequired(); //not null
 
             builder.Property(p => p.Preco)
-                .HasColumnType("decimal(18,2)")
-                .IsRequired();
+                .HasColumnType("decimal(18,2)") //decimal(18,2)
+                .IsRequired(); //not null
 
             builder.Property(p => p.Quantidade)
-                .IsRequired();
+                .IsRequired(); //not null
 
             builder.Property(p => p.DataHoraCriacao)
-                  .HasColumnType("datetime")
-                  .IsRequired();
+                .HasColumnType("datetime") //datetime
+                .IsRequired(); //not null
 
             builder.Property(p => p.Ativo)
-                .IsRequired();
+                .IsRequired(); //not null
 
             builder.Property(p => p.CategoriaId)
-                .IsRequired();
+                .IsRequired(); //not null
 
-            // Relationships
-            builder.HasOne(p => p.Categoria) // Produto has 1 Categoria
-                .WithMany(c => c.Produtos) // Categoria has N Produtos
-                .HasForeignKey(p => p.CategoriaId)// Foreign key in Produto
-                .OnDelete(DeleteBehavior.Restrict); // Optional: specify delete behavior has not been set Produto
+            builder.HasOne(p => p.Categoria) //Produto TEM 1 Categoria
+                .WithMany(c => c.Produtos) //Categoria TEM muitos Produtos
+                .HasForeignKey(p => p.CategoriaId) //chave estrangeira
+                .OnDelete(DeleteBehavior.Restrict); //comportamento de exclusão restritivo
         }
     }
 }

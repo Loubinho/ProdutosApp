@@ -12,24 +12,24 @@ namespace ProdutosApp.Infra.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Categorias",
+                name: "Categoria",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Ativo = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categorias", x => x.Id);
+                    table.PrimaryKey("PK_Categoria", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Produtos",
+                name: "Produto",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(150)", maxLength: 50, nullable: false),
                     Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quantidade = table.Column<int>(type: "int", nullable: false),
                     DataHoraCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -38,35 +38,52 @@ namespace ProdutosApp.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Produtos", x => x.Id);
+                    table.PrimaryKey("PK_Produto", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Produtos_Categorias_CategoriaId",
+                        name: "FK_Produto_Categoria_CategoriaId",
                         column: x => x.CategoriaId,
-                        principalTable: "Categorias",
+                        principalTable: "Categoria",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categoria_Nome",
-                table: "Categorias",
+                table: "Categoria",
                 column: "Nome",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produtos_CategoriaId",
-                table: "Produtos",
+                name: "IX_Produto_CategoriaId",
+                table: "Produto",
                 column: "CategoriaId");
+
+            migrationBuilder.InsertData(
+                table: "Categoria",
+                columns: new[] { "Id", "Nome", "Ativo" },
+                values: new object[,]
+                {
+                    { Guid.NewGuid(), "Alimentos", true },
+                    { Guid.NewGuid(), "Bebidas", true },
+                    { Guid.NewGuid(), "Limpeza", true },
+                    { Guid.NewGuid(), "Higiene", true },
+                    { Guid.NewGuid(), "Papelaria", true },
+                    { Guid.NewGuid(), "Eletrônicos", true },
+                    { Guid.NewGuid(), "Roupas", true },
+                    { Guid.NewGuid(), "Calçados", true },
+                    { Guid.NewGuid(), "Móveis", true },
+                    { Guid.NewGuid(), "Brinquedos", true }
+                });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Produtos");
+                name: "Produto");
 
             migrationBuilder.DropTable(
-                name: "Categorias");
+                name: "Categoria");
         }
     }
 }

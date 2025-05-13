@@ -9,29 +9,27 @@ using System.Threading.Tasks;
 namespace ProdutosApp.Infra.Data.Contexts
 {
     /// <summary>
-    /// Represents the database context for the application with Entity Framework Core.
+    /// Classe de contexto para configuração do Entity Framework
     /// </summary>
     public class DataContext : DbContext
     {
         /// <summary>
-        /// Constructor for the DataContext class.
+        /// Construtor para injeção de dependência, ou seja, para que esta classe
+        /// possa receber as configurações de conexão de banco de dados
         /// </summary>
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options)
+            : base(options)
         {
-
+            
         }
 
         /// <summary>
-        /// DbSet for the Produto entity.
+        /// Método para adicionar as classes de mapeamento feitas no projeto
         /// </summary>
-        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProdutoMap());
             modelBuilder.ApplyConfiguration(new CategoriaMap());
-
-            // Apply the mappings
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProdutosApp.Domain.Interfaces.Repositories;
+using ProdutosApp.Infra.Data.Contexts;
+using ProdutosApp.Infra.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +13,22 @@ using System.Threading.Tasks;
 namespace ProdutosApp.Infra.Data.Extensions
 {
     /// <summary>
-    /// Extension class for adding Entity Framework Core services to the IServiceCollection.
+    /// Classe de extensão para injeção de dependência do Entity Framework.
     /// </summary>
     public static class EntityFrameworkExtension
     {
         /// <summary>
-        /// Extension method to add Entity Framework Core services to the IServiceCollection.
+        /// Método de extensão para registrar o Entity Framework no serviço de injeção de dependência.
         /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddEntityFramework( this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
-            // Add Entity Framework Core with SQL Server
-            services.AddDbContext<Contexts.DataContext>(options =>
+            // Adiciona o DataContext com a string de conexão do banco de dados
+            services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ProdutosAppBD")));
 
-            // Add other services related to Entity Framework Core here if needed
+            // Adicionar injeção de dependência para o UnitOfWork
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             return services;
         }
     }

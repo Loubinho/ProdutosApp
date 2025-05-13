@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace ProdutosApp.Domain.Interfaces.Repositories
 {
+    /// <summary>
+    /// Interface para repositório genérico
+    /// </summary>
     public interface IBaseRepository<TEntity, TKey>
-        where TEntity : class
+        where TEntity: class
     {
-        Task AddAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(TKey id);
+        Task AddAsync(TEntity obj);
+        Task UpdateAsync(TEntity obj);
+        Task DeleteAsync(TEntity obj);
 
-        Task<TEntity> GetByIdAsync(TKey id);        
-        Task<List<TEntity>> GetAllAsync(); //Usado quando o resultado da consulta não pode ser alterada
-        //Task<IEnumerable<TEntity>> GetAllAsync(); //Usado quando o resultado da consulta pode ser alterada
+        Task<List<TEntity>> GetAllAsync();
+        Task<TEntity?> GetByIdAsync(TKey id);
     }
 }

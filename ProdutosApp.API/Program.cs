@@ -1,3 +1,5 @@
+using ProdutosApp.Application.Extensions;
+using ProdutosApp.Domain.Extensions;
 using ProdutosApp.Infra.Data.Extensions;
 using Scalar.AspNetCore;
 
@@ -7,20 +9,13 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 //Registrando os serviços de injeção de dependência
+builder.Services.AddApplicationServices();
+builder.Services.AddDomainServices();
 builder.Services.AddEntityFramework(builder.Configuration);
 
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(
-    //c =>
-    //{
-    //    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    //    {
-    //        Title = "ProdutosApp API",
-    //        Version = "v1"
-    //    });
-    //}
-    );
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -31,13 +26,7 @@ if (app.Environment.IsDevelopment())
 
 //Swagger
 app.UseSwagger();
-app.UseSwaggerUI(
-    //    c =>
-    //{
-    //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProdutosApp API V1");
-    //    c.RoutePrefix = string.Empty; // Set the Swagger UI at the app's root
-    //}
-    );
+app.UseSwaggerUI();
 
 //Scalar
 app.MapScalarApiReference(options => {
